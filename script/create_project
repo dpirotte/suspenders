@@ -37,8 +37,8 @@ def search_and_replace(file, search, replace)
   end
 end
 
-def installed?(gem_name)
-  installed_gems = Gem.source_index.find_name(gem_name)
+def installed?(gem_name, version = '>= 0')
+  installed_gems = Gem.source_index.find_name(gem_name, version)
   installed_gems.any?
 end
 
@@ -60,12 +60,12 @@ end
 run("git commit -a -m 'Initial commit'")
 
 # can't vendor nokogiri because it has native extensions
-unless installed?("nokogiri")
+unless installed?("nokogiri", '= 1.4.0')
   run "sudo gem install nokogiri --version='1.4.0'"
 end
 
 # need RedCloth installed for clearance generators to run.
-unless installed?("RedCloth")
+unless installed?("RedCloth", '= 4.2.2')
   run "sudo gem install RedCloth --version='4.2.2'"
 end
 
